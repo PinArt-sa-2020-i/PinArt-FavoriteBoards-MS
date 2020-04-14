@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mysql
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: Contrasena123.
+      MYSQL_DATABASE: users_boards
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Contrasena123.
+    ports:
+      42333:3306
