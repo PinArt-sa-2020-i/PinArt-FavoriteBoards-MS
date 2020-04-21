@@ -35,6 +35,11 @@ public class UserFollowController {
         return ResponseEntity.ok(userFollowService.getUserFollow(id));
     }
 
+    @GetMapping("/getUsersFollowingByFollower/{follower_id}")
+    public ResponseEntity<List<Long>> getUsersFollowingByFollower(@PathVariable(value = "follower_id") Long id){
+        return ResponseEntity.ok(userFollowService.findFollowingsByFollower(id));
+    }
+
     @PostMapping(path ="/userFollowing/{userFollowing}/useFollower/{userFollower}/create", consumes = "application/json")
     public ResponseEntity<Long> createUserFollow(@PathVariable (value = "userFollowing") Long userFollowing,
                                             @PathVariable (value = "userFollower") Long userFollower) {

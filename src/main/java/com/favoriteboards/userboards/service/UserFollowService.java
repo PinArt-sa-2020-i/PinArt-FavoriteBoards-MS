@@ -6,6 +6,8 @@ import com.favoriteboards.userboards.repository.BoardFollowRepository;
 import com.favoriteboards.userboards.repository.UserFollowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,10 @@ public class UserFollowService {
 
     public List<UserFollow> findAll(){
         return userFollowRepository.findAll();
+    }
+
+    public List<Long> findFollowingsByFollower(Long follower_id){
+        return userFollowRepository.findFollowingByFollowerId(follower_id);
     }
 
     public UserFollow getUserFollow(Long id){
