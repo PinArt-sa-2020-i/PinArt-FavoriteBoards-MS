@@ -11,12 +11,18 @@
     <groupId>com.favoriteBoards</groupId>
     <artifactId>userboards</artifactId>
     <version>1</version>
+    <packaging>jar</packaging>
+
     <name>userboards</name>
     <description>Microservicio Tableros favoritos</description>
 
     <properties>
-        <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
     </properties>
+
+
 
     <dependencies>
         <dependency>
