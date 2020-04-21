@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  mysql-docker:
+    image: "mysql/mysql-server:5.7"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=favoriteboards_bd
+    volumes:
+      - /data/mysql
+  favoriteboards-ms:
+    image: favoriteboards-ms:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql-docker
+    ports:
+      - 8087:8080
+    volumes:
+      - /data/spring-boot-app
