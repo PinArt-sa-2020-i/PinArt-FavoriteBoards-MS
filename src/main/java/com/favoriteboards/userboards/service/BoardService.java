@@ -23,6 +23,10 @@ public class BoardService {
         return boardRepository.findByid(id);
     }
 
+    public List<Board> findByUserId(Long  user_id){
+        return boardRepository.findByUserId(user_id);
+    }
+
 
     public Board createBoard(Board board){
 

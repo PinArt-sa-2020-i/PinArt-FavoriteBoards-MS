@@ -23,10 +23,18 @@ public class BoardController {
     @Autowired
     private final UserService userService;
 
-    @GetMapping("/boards")
+    @GetMapping("/getall")
     public ResponseEntity<List<Board>> getAllBoards(){
+
         return ResponseEntity.ok(boardService.findAll());
     }
+
+    @GetMapping("/getAllBoardsByUser/{user_id}")
+    public ResponseEntity<List<Board>> getAllBoardsByUser(@PathVariable(value = "user_id") Long user_id){
+        return ResponseEntity.ok(boardService.findByUserId(user_id));
+    }
+
+
 
     @GetMapping("/boards/{id}")
     public ResponseEntity<Board> getContactById(@PathVariable(value = "id") Long id){

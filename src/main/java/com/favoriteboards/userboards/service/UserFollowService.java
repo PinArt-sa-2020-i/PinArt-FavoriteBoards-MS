@@ -30,6 +30,12 @@ public class UserFollowService {
         return userFollowRepository.findByid(id);
     }
 
+    public UserFollow getUserFollow(Long follower_id, Long following_id){
+        return userFollowRepository.findUserFollow(follower_id,following_id).get(0);
+
+    }
+
+
     public Long countUserFollow(Long id) {
         return userFollowRepository.countByid(id);
     }

@@ -1,5 +1,6 @@
 package com.favoriteboards.userboards.service;
 
+import com.favoriteboards.userboards.model.Board;
 import com.favoriteboards.userboards.model.BoardFollow;
 import com.favoriteboards.userboards.model.User;
 import com.favoriteboards.userboards.repository.BoardFollowRepository;
@@ -21,8 +22,14 @@ public class BoardFollowService {
     }
 
     public BoardFollow getBoardFollow(Long id){
+
         return boardFollowRepository.findByid(id);
     }
+
+    public List<Board> findByUserId(Long  user_id){
+        return boardFollowRepository.findByUserId(user_id);
+    }
+
 
     public Long countBoardFollow(Long id) {
         return boardFollowRepository.countByid(id);
@@ -33,7 +40,10 @@ public class BoardFollowService {
     }
 
     public void deleteBoardFollow(BoardFollow boardFollow) {
+
         boardFollowRepository.delete(boardFollow);
     }
+
+
 
 }

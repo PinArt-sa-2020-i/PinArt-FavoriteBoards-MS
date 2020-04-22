@@ -18,10 +18,10 @@ public class UserService {
     }
 
     public User getUser(Long id){
-        return userRepository.findByid(id);
+        return userRepository.findById(id);
     }
 
-     public Long countUsers(Long id) {
+    public Long countUsers(Long id) {
        return userRepository.countByid(id);
     }
 

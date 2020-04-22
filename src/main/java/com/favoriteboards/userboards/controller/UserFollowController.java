@@ -40,20 +40,19 @@ public class UserFollowController {
         return ResponseEntity.ok(userFollowService.findFollowingsByFollower(id));
     }
 
-    @PostMapping(path ="/userFollowing/{userFollowing}/useFollower/{userFollower}/create", consumes = "application/json")
+    @PostMapping(path ="/create/userFollowing/{userFollowing}/userFollower/{userFollower}", consumes = "application/json")
     public ResponseEntity<Long> createUserFollow(@PathVariable (value = "userFollowing") Long userFollowing,
                                             @PathVariable (value = "userFollower") Long userFollower) {
         try{
 
             UserFollow userFollow= new UserFollow();
-            User user1= userService.getUser(userFollowing);
+
+            User user2= userService.getUser(userFollower);
+             User user1= userService.getUser(userFollowing);
+
+
             userFollow.setUserFollowing(user1);
-
-
-             User user2= userService.getUser(userFollower);
             userFollow.setUserFollower(user2);
-
-
 
 
             userFollowService.createUserFollow(userFollow);
@@ -82,6 +81,28 @@ public class UserFollowController {
             return new ResponseEntity<>((long) -1,HttpStatus.FORBIDDEN);
         }
     }
+
+
+    @DeleteMapping(path ="/delete/follower/{follower_id}/following/{following_id}")
+    public ResponseEntity<Long> deleteUserFollow(@PathVariable (value = "follower_id") Long follower_id,
+                                                 @PathVariable (value = "following_id") Long following_id) {
+        try{
+            long count=0;
+            //Long count=userFollowService.countUserFollow(userFollowId);
+            //if (count==1) {
+
+                UserFollow userFollowDelete = userFollowService.getUserFollow(follower_id, following_id);
+
+                userFollowService.deleteUserFollow(userFollowDelete);
+                return new ResponseEntity<>(count, HttpStatus.ACCEPTED);
+           /* }else {
+                return new ResponseEntity<>(count,HttpStatus.BAD_REQUEST);
+            }*/
+        }catch (Exception e){
+            return new ResponseEntity<>((long) -1,HttpStatus.FORBIDDEN);
+        }
+    }
+
 
 
 

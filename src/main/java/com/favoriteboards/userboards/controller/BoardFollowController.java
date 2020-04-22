@@ -3,6 +3,7 @@ package com.favoriteboards.userboards.controller;
 import com.favoriteboards.userboards.model.Board;
 import com.favoriteboards.userboards.model.BoardFollow;
 import com.favoriteboards.userboards.model.User;
+import com.favoriteboards.userboards.modelview.BoardFollowView;
 import com.favoriteboards.userboards.service.BoardFollowService;
 import com.favoriteboards.userboards.service.BoardService;
 import com.favoriteboards.userboards.service.UserService;
@@ -36,10 +37,15 @@ public class BoardFollowController {
         return ResponseEntity.ok(boardFollowService.getBoardFollow(id));
     }
 
+    @GetMapping("/getAllBoardsFollowByUser/{user_id}")
+    public ResponseEntity<List<Board>> getAllBoardsFollowByUser(@PathVariable(value = "user_id") Long user_id){
+
+        return ResponseEntity.ok(boardFollowService.findByUserId(user_id));
+    }
 
 
 
-    @PostMapping(path ="/user/{userId}/board/{boardId}/create", consumes = "application/json")
+    @PostMapping(path ="create/user/{userId}/board/{boardId}", consumes = "application/json")
     public ResponseEntity<Long> createBoardFollow(@PathVariable (value = "userId") Long userId,
                                             @PathVariable (value = "boardId") Long boardId) {
         try{
