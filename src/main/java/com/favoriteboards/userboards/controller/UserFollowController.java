@@ -36,7 +36,7 @@ public class UserFollowController {
     }
 
     @GetMapping("/getUsersFollowingByFollower/{follower_id}")
-    public ResponseEntity<List<Long>> getUsersFollowingByFollower(@PathVariable(value = "follower_id") Long id){
+    public ResponseEntity<List<User>> getUsersFollowingByFollower(@PathVariable(value = "follower_id") Long id){
         return ResponseEntity.ok(userFollowService.findFollowingsByFollower(id));
     }
 

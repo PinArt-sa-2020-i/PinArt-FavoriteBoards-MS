@@ -1,6 +1,7 @@
 package com.favoriteboards.userboards.service;
 
 import com.favoriteboards.userboards.model.BoardFollow;
+import com.favoriteboards.userboards.model.User;
 import com.favoriteboards.userboards.model.UserFollow;
 import com.favoriteboards.userboards.repository.BoardFollowRepository;
 import com.favoriteboards.userboards.repository.UserFollowRepository;
@@ -22,7 +23,7 @@ public class UserFollowService {
         return userFollowRepository.findAll();
     }
 
-    public List<Long> findFollowingsByFollower(Long follower_id){
+    public List<User> findFollowingsByFollower(Long follower_id){
         return userFollowRepository.findFollowingByFollowerId(follower_id);
     }
 
