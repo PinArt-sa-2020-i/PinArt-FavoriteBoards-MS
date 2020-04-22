@@ -43,7 +43,7 @@ public class BoardController {
 
 
     @PostMapping(path ="create/user/{userId}", consumes = "application/json")
-    public ResponseEntity<Long> createBoard(@PathVariable (value = "userId") Long userId,
+    public ResponseEntity<Board> createBoard(@PathVariable (value = "userId") Long userId,
                                             @RequestBody Board board) {
         try{
             Long count=boardService.countBoards(board.getId());
@@ -53,12 +53,12 @@ public class BoardController {
                 board.setUser(user);
 
                 boardService.createBoard(board);
-                return new ResponseEntity<>(count, HttpStatus.CREATED);
+                return new ResponseEntity<>(board, HttpStatus.CREATED);
             }else {
-                return new ResponseEntity<>(count,HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
             }
         }catch (Exception e){
-            return new ResponseEntity<>((long) -1,HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
         }
     }
 
