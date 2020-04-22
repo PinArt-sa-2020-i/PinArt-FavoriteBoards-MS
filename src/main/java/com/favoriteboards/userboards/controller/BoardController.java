@@ -62,7 +62,7 @@ public class BoardController {
         }
     }
 
-    @PutMapping("/update/users/{userId}/board/{boardId}")
+    @PutMapping("/update/board/{boardId}")
     public ResponseEntity<Board> updateBoard(@PathVariable (value = "userId") Long userId,
                                  @PathVariable (value = "boardId") Long boardId,
                                  @RequestBody Board board) {
@@ -77,8 +77,8 @@ public class BoardController {
                 board_update.setDescription(board.getDescription());
                 board_update.setName(board.getName());
 
-                User user= userService.getUser(userId);
-                board_update.setUser(user);
+                //User user= userService.getUser(userId);
+                //board_update.setUser(user);
 
                 boardService.updateBoard(board_update);
                 return new ResponseEntity<>(board_update, HttpStatus.OK);
