@@ -42,7 +42,7 @@ public class BoardController {
     }
 
 
-    @PostMapping(path ="/users/{userId}/create", consumes = "application/json")
+    @PostMapping(path ="create/user/{userId}", consumes = "application/json")
     public ResponseEntity<Long> createBoard(@PathVariable (value = "userId") Long userId,
                                             @RequestBody Board board) {
         try{
