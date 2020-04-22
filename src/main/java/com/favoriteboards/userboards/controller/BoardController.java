@@ -62,8 +62,8 @@ public class BoardController {
         }
     }
 
-    @PutMapping("/users/{userId}/boards/{boardId}")
-    public ResponseEntity<Long> updateBoard(@PathVariable (value = "userId") Long userId,
+    @PutMapping("/update/users/{userId}/board/{boardId}")
+    public ResponseEntity<Board> updateBoard(@PathVariable (value = "userId") Long userId,
                                  @PathVariable (value = "boardId") Long boardId,
                                  @RequestBody Board board) {
 
@@ -81,12 +81,12 @@ public class BoardController {
                 board_update.setUser(user);
 
                 boardService.updateBoard(board_update);
-                return new ResponseEntity<>(count, HttpStatus.OK);
+                return new ResponseEntity<>(board_update, HttpStatus.OK);
             }else {
-                return new ResponseEntity<>(count,HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
             }
         }catch (Exception e){
-            return new ResponseEntity<>((long) -1,HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
         }
 
 
