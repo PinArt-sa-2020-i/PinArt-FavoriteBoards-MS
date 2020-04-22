@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -23,8 +24,10 @@ public class User implements Serializable {
     public static final String FIND_ALL = "user.findAll";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
