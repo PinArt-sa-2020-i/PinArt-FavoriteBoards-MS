@@ -23,15 +23,13 @@ public class UserFollow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference(value="user-userfing")
     private User userFollowing;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference(value="user-userfer")
     private User userFollower;
-
-
 
     public Long getId() {
         return id;
@@ -42,18 +40,22 @@ public class UserFollow {
     }
 
     public User getUserFollowing() {
+
         return userFollowing;
     }
 
     public void setUserFollowing(User userFollowing) {
+
         this.userFollowing = userFollowing;
     }
 
     public User getUserFollower() {
+
         return userFollower;
     }
 
     public void setUserFollower(User userFollower) {
+
         this.userFollower = userFollower;
     }
 }
