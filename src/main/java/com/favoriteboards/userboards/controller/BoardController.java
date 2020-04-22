@@ -93,7 +93,7 @@ public class BoardController {
 
 
    @DeleteMapping(path ="/delete/{boardId}")
-    public ResponseEntity<Long> deleteBoard(@PathVariable (value = "boardId") Long boardId) {
+    public ResponseEntity<Board> deleteBoard(@PathVariable (value = "boardId") Long boardId) {
         try{
             Long count=boardService.countBoards(boardId);
             if (count==1) {
@@ -101,12 +101,12 @@ public class BoardController {
                 Board board_delete = boardService.getBoard(boardId);
 
                 boardService.deleteBoard(board_delete);
-                return new ResponseEntity<>(count, HttpStatus.ACCEPTED);
+                return new ResponseEntity<>(board_delete, HttpStatus.ACCEPTED);
             }else {
-                return new ResponseEntity<>(count,HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
             }
         }catch (Exception e){
-            return new ResponseEntity<>((long) -1,HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
         }
     }
 
