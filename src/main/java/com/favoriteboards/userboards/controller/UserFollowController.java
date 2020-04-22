@@ -93,7 +93,7 @@ public class UserFollowController {
 
                 UserFollow userFollowDelete = userFollowService.getUserFollow(follower_id, following_id);
 
-                userFollowService.deleteUserFollow(userFollowDelete);
+               userFollowService.deleteUserFollow(userFollowDelete);
                 return new ResponseEntity<>(count, HttpStatus.ACCEPTED);
            /* }else {
                 return new ResponseEntity<>(count,HttpStatus.BAD_REQUEST);
