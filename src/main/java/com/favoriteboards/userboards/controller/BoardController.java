@@ -36,7 +36,7 @@ public class BoardController {
 
 
 
-    @GetMapping("/boards/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Board> getContactById(@PathVariable(value = "id") Long id){
         return ResponseEntity.ok(boardService.getBoard(id));
     }
