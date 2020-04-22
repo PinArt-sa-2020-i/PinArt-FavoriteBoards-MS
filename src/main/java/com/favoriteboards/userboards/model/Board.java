@@ -2,6 +2,7 @@ package com.favoriteboards.userboards.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -45,8 +46,7 @@ public class Board implements Serializable {
         createdAt = ZonedDateTime.now();
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    //@JsonBackReference(value="user_board")
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
