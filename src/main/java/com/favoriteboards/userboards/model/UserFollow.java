@@ -24,11 +24,11 @@ public class UserFollow {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference(value="user-userfing")
+    //@JsonBackReference(value="user-userfing")
     private User userFollowing;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference(value="user-userfer")
+    //@JsonBackReference(value="user-userfer")
     private User userFollower;
 
     public Long getId() {

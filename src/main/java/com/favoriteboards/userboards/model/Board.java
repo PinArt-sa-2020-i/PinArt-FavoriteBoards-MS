@@ -46,15 +46,12 @@ public class Board implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference(value="user_board")
+    //@JsonBackReference(value="user_board")
     private User user;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JsonBackReference(value="user-boardsf")
     private List<BoardFollow> boards_following = new ArrayList<>();
-
-
-
 
     public Long getId() {
         return id;

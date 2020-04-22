@@ -41,7 +41,7 @@ public class UserFollowController {
     }
 
     @PostMapping(path ="/create/userFollowing/{userFollowing}/userFollower/{userFollower}", consumes = "application/json")
-    public ResponseEntity<Long> createUserFollow(@PathVariable (value = "userFollowing") Long userFollowing,
+    public ResponseEntity<UserFollow> createUserFollow(@PathVariable (value = "userFollowing") Long userFollowing,
                                             @PathVariable (value = "userFollower") Long userFollower) {
         try{
 
@@ -49,18 +49,23 @@ public class UserFollowController {
 
             User user2= userService.getUser(userFollower);
              User user1= userService.getUser(userFollowing);
+             if(user2!=null && user1!=null)
+             {
+                 userFollow.setUserFollowing(user1);
+                 userFollow.setUserFollower(user2);
 
 
-            userFollow.setUserFollowing(user1);
-            userFollow.setUserFollower(user2);
+                 userFollowService.createUserFollow(userFollow);
 
+                 return new ResponseEntity<>(userFollow, HttpStatus.CREATED);
 
-            userFollowService.createUserFollow(userFollow);
-
-            return new ResponseEntity<>(userFollow.getId(), HttpStatus.CREATED);
+             }
+             else{
+                 return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+             }
 
         }catch (Exception e){
-            return new ResponseEntity<>((long) -1,HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
         }
     }
 
