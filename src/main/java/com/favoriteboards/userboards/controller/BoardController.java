@@ -63,8 +63,7 @@ public class BoardController {
     }
 
     @PutMapping("/update/board/{boardId}")
-    public ResponseEntity<Board> updateBoard(@PathVariable (value = "userId") Long userId,
-                                 @PathVariable (value = "boardId") Long boardId,
+    public ResponseEntity<Board> updateBoard(@PathVariable (value = "boardId") Long boardId,
                                  @RequestBody Board board) {
 
         try{
