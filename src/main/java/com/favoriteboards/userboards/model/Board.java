@@ -45,7 +45,7 @@ public class Board implements Serializable {
         createdAt = ZonedDateTime.now();
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value="user_board")
     private User user;
 
