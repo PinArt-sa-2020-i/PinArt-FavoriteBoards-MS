@@ -46,7 +46,7 @@ public class BoardFollowController {
 
 
     @PostMapping(path ="create/user/{userId}/board/{boardId}", consumes = "application/json")
-    public ResponseEntity<Long> createBoardFollow(@PathVariable (value = "userId") Long userId,
+    public ResponseEntity<BoardFollow> createBoardFollow(@PathVariable (value = "userId") Long userId,
                                             @PathVariable (value = "boardId") Long boardId) {
         try{
 
@@ -60,10 +60,10 @@ public class BoardFollowController {
 
                 boardFollowService.createBoardFollow(boardFollow);
 
-                return new ResponseEntity<>(boardFollow.getId(), HttpStatus.CREATED);
+                return new ResponseEntity<>(boardFollow, HttpStatus.CREATED);
 
         }catch (Exception e){
-            return new ResponseEntity<>((long) -1,HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
         }
     }
 

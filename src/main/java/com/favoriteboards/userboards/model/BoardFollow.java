@@ -33,11 +33,11 @@ public class BoardFollow {
         createdAt = ZonedDateTime.now();
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     //@JsonBackReference(value="user-boardsf")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     //@JsonBackReference(value="board-boardsf")
     private Board board;
 
