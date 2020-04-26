@@ -20,13 +20,18 @@ public class BoardService {
         return boardRepository.findAll();
     }
     public Board getBoard(Long id){
+
         return boardRepository.findByid(id);
     }
 
     public List<Board> findByUserId(Long  user_id){
+
         return boardRepository.findByUserId(user_id);
     }
 
+    public List<Board> findByName(String  name){
+        return boardRepository.findByName(name);
+    }
 
     public Board createBoard(Board board){
 

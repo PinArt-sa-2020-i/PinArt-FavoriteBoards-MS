@@ -17,6 +17,11 @@ public interface BoardRepository extends JpaRepository <Board, Long> {
     @Query("SELECT r FROM Board r where r.user.id = :user_id")
     public List<Board> findByUserId(Long user_id );
 
+    @Query("SELECT r FROM Board r where r.name = :name")
+    public List<Board> findByName(String name );
+
+
+
 }
 
 

@@ -1,5 +1,7 @@
 package com.favoriteboards.userboards.controller;
 
+import com.favoriteboards.userboards.dto.BoardFollowDTO;
+import com.favoriteboards.userboards.dto.UserFollowDTO;
 import com.favoriteboards.userboards.model.Board;
 import com.favoriteboards.userboards.model.BoardFollow;
 import com.favoriteboards.userboards.model.User;
@@ -30,10 +32,12 @@ public class UserFollowController {
         return ResponseEntity.ok(userFollowService.findAll());
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<UserFollow> getUserFollowById(@PathVariable(value = "id") Long id){
         return ResponseEntity.ok(userFollowService.getUserFollow(id));
     }
+
 
     @GetMapping("/getUsersFollowingByFollower/{follower_id}")
     public ResponseEntity<List<User>> getUsersFollowingByFollower(@PathVariable(value = "follower_id") Long id){
@@ -68,6 +72,41 @@ public class UserFollowController {
             return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
         }
     }
+
+
+
+    @PostMapping(path ="/create", consumes = "application/json")
+    public ResponseEntity<UserFollow> createUserFollow(@RequestBody UserFollowDTO userFollowDTO) {
+        try{
+
+            UserFollow userFollow= new UserFollow();
+
+
+            User user2= userService.getUser(userFollowDTO.getUserFollower_id());
+            User user1= userService.getUser(userFollowDTO.getUserFollowing_id());
+
+            if(user2!=null && user1!=null)
+            {
+                userFollow.setUserFollowing(user1);
+                userFollow.setUserFollower(user2);
+
+
+                userFollowService.createUserFollow(userFollow);
+
+                return new ResponseEntity<>(userFollow, HttpStatus.CREATED);
+
+            }
+            else{
+                return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
+        }
+    }
+
+
+
 
     @DeleteMapping(path ="/delete/{userFollowId}")
     public ResponseEntity<Long> deleteUserFollow(@PathVariable (value = "userFollowId") Long userFollowId) {

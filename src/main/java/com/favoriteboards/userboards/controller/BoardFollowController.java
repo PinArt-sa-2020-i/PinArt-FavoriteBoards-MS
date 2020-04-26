@@ -1,9 +1,9 @@
 package com.favoriteboards.userboards.controller;
 
+import com.favoriteboards.userboards.dto.BoardFollowDTO;
 import com.favoriteboards.userboards.model.Board;
 import com.favoriteboards.userboards.model.BoardFollow;
 import com.favoriteboards.userboards.model.User;
-import com.favoriteboards.userboards.modelview.BoardFollowView;
 import com.favoriteboards.userboards.service.BoardFollowService;
 import com.favoriteboards.userboards.service.BoardService;
 import com.favoriteboards.userboards.service.UserService;
@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,9 +30,27 @@ public class BoardFollowController {
     private final UserService userService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<BoardFollow>> getAllUsers() {
+    public ResponseEntity<List<BoardFollow>> getAllBoardsFollow() {
         return ResponseEntity.ok(boardFollowService.findAll());
     }
+
+
+
+    @GetMapping("/getAll2")
+    public ResponseEntity<List<BoardFollowDTO>> getAllBoardsFollow2() {
+
+        List<BoardFollowDTO> boardFollowDTOs = new ArrayList<BoardFollowDTO>();
+
+        List<BoardFollow> boards =  boardFollowService.findAll();
+
+        for(BoardFollow bw: boards){
+            boardFollowDTOs.add(new BoardFollowDTO(bw.getId(),bw.getCreatedAt(),
+                                                    bw.getBoard().getId(),bw.getUser().getId()));
+        }
+
+        return ResponseEntity.ok(boardFollowDTOs);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<BoardFollow> getBoardFollowById(@PathVariable(value = "id") Long id){
@@ -67,6 +87,26 @@ public class BoardFollowController {
         }
     }
 
+    @PostMapping(path ="create", consumes = "application/json")
+    public ResponseEntity<BoardFollow> createBoardFollow(@RequestBody BoardFollowDTO boardFollowDTO) {
+        try{
+
+            BoardFollow boardFollow= new BoardFollow();
+            User user= userService.getUser(boardFollowDTO.getUser_id());
+            boardFollow.setUser(user);
+
+
+            Board board = boardService.getBoard(boardFollowDTO.getBoard_id());
+            boardFollow.setBoard(board);
+
+            boardFollowService.createBoardFollow(boardFollow);
+
+            return new ResponseEntity<>(boardFollow, HttpStatus.CREATED);
+
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
+        }
+    }
 
 
     @DeleteMapping(path ="/delete/{boardFollowId}")

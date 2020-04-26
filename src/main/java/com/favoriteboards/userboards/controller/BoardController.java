@@ -1,6 +1,9 @@
 package com.favoriteboards.userboards.controller;
 
+import com.favoriteboards.userboards.dto.BoardDTO;
+import com.favoriteboards.userboards.dto.BoardFollowDTO;
 import com.favoriteboards.userboards.model.Board;
+import com.favoriteboards.userboards.model.BoardFollow;
 import com.favoriteboards.userboards.model.User;
 import com.favoriteboards.userboards.repository.UserRepository;
 import com.favoriteboards.userboards.service.BoardService;
@@ -11,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,7 +39,30 @@ public class BoardController {
         return ResponseEntity.ok(boardService.findByUserId(user_id));
     }
 
+    @GetMapping("/getAllBoardsByName/{name}")
+    public ResponseEntity<List<Board>> getAllBoardsByName(@PathVariable(value = "name") String name){
+        return ResponseEntity.ok(boardService.findByName(name));
+    }
 
+    @GetMapping("/getAllBoardsByName2/{name}")
+    public ResponseEntity<List<BoardDTO>> getAllBoardsByName2(@PathVariable(value = "name") String name){
+
+        List<BoardDTO> boardDTOs = new ArrayList<BoardDTO>();
+
+        List<Board> boards =  boardService.findByName(name);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+       
+
+        for(Board bw: boards){
+            boardDTOs.add(new BoardDTO(bw.getId(),
+                    bw.getName(),
+                    bw.getDescription(),
+                    bw.getCreatedAt().format(formatter),
+                    bw.getUser().getId()));
+        }
+        return ResponseEntity.ok(boardDTOs);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Board> getContactById(@PathVariable(value = "id") Long id){
@@ -57,6 +85,30 @@ public class BoardController {
             }else {
                 return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
             }
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @PostMapping(path ="create", consumes = "application/json")
+    public ResponseEntity<Board> createBoard(@RequestBody BoardDTO boardDTO) {
+        try{
+            //Long count=boardService.countBoards(board.getId());
+           // if (count==0) {
+
+                User user= userService.getUser(boardDTO.getUser_id());
+
+                Board board  = new Board();
+                board.setUser(user);
+                board.setName(boardDTO.getName());
+                board.setDescription(boardDTO.getDescription());
+
+
+                boardService.createBoard(board);
+                return new ResponseEntity<>(board, HttpStatus.CREATED);
+           // }else {
+           //     return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+           // }
         }catch (Exception e){
             return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
         }
