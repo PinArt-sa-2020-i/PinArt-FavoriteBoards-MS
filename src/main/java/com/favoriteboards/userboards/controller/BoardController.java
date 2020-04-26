@@ -52,7 +52,7 @@ public class BoardController {
         List<Board> boards =  boardService.findByName(name);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-       
+
 
         for(Board bw: boards){
             boardDTOs.add(new BoardDTO(bw.getId(),
